@@ -566,10 +566,10 @@
                         new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Beef & Lamb', 'Cheese', 'Poultry', 'Pork', 'Tofu', 'Beans'],
+                                labels: ['Beef', 'Cheese','Pork', 'Chicken',  'Tofu', 'Beans and Peas'],
                                 datasets: [{
                                     label: 'kg CO2-eq per 100g protein',
-                                    data: [50, 20, 6, 7, 2, 1.5],
+                                    data: [50.0, 10.8, 7.6, 5.7, 1.6, 0.5],
                                     backgroundColor: [
                                         brilliantBluesPalette.redPink, brilliantBluesPalette.pink,
                                         brilliantBluesPalette.orange, brilliantBluesPalette.yellow,
@@ -584,6 +584,10 @@
                                 plugins: {
                                     legend: { display: false },
                                     title: { display: true, text: 'GHG Footprint of Protein Sources', font: { size: 16 } },
+                                    subtitle: { // Subtitle added here
+                                        display: true,
+                                        text: 'data from Poore and Nemecek, 2018 <i>Science</i>', // Added subtitle text with italicized Science
+                                    },
                                     ...chartTooltipConfig.plugins
                                 }
                             }
