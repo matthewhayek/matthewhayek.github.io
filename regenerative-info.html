@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rethinking Regenerative Agriculture: A Portfolio Approach to Food System GHG Mitigation</title>
+    <!-- Explicitly load Chart.js v3.9.1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Removed chartjs-plugin-error-bars.min.js as we are now drawing manually -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .bg-custom-gray { background-color: #f0f2f5; }
+        .text-custom-dark-blue { color: #003f5c; }
+        .text-custom-purple { color: #665191; }
+        .text-custom-pink { color: #d45087; }
+        .text-custom-orange { color: #ff7c43; }
+        .icon-stat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2 px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .flowchart-node {
+            border: 2px solid;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            font-weight: 600;
+        }
+        .flowchart-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #665191;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-custom-dark-blue mb-4">The Climate Challenge on Our Plates</h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600">Regenerative agriculture is proposed as a key climate solution. But a deeper look at the science reveals its limits and highlights the need for a broader, more integrated strategy.</p>
+        </header>
+
+        <main class="space-y-12">
+            
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-custom-dark-blue mb-4 text-center">The Food System's Giant Footprint</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Our global food system is a major driver of climate change, responsible for roughly a third of all human-caused greenhouse gas emissions.</p>
+                <div class="chart-container mx-auto h-64 sm:h-80">
+                    <canvas id="foodSystemEmissionsChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4">This includes emissions from land use change, on-farm activities, supply chains, and waste.</p>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-custom-dark-blue mb-4 text-center">Carbon Stocks: Not All Land Is Created Equal</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">To understand land-based climate solutions, we must first compare the carbon storage capacity of different ecosystems. Intact forests hold vastly more carbon than agricultural lands, highlighting the "carbon opportunity cost" of land conversion.</p>
+                <div class="chart-container mx-auto h-80 sm:h-96">
+                    <canvas id="carbonStocksChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-custom-pink mb-4 text-center">Regenerative Grazing: A Chasm Between Hype and Evidence</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">While proponents claim regenerative grazing sequesters significant carbon, a systematic review of scientific studies reveals a different story. As study quality improves, the measured climate benefit diminishes and becomes statistically insignificant.</p>
+                <div class="chart-container mx-auto h-80 sm:h-96">
+                    <canvas id="grazingSOCChart"></canvas>
+                </div>
+                 <p class="text-center text-sm text-gray-500 mt-4">High-quality longitudinal studies (the gold standard) show a mean soil carbon change that is not statistically different from zero, and far too low to offset livestock emissions.
+					 Cross-sectional studies are lower quality because it is impossible to know whether differences in soil carbon were present before studies began. 
+					 Observational studies are the lowest-quality evidence that regenerative grazing causes soil carbon uptake, because they lack experimental control, i.e. comparison to conventional production under similar conditions.
+					 Additionally, most of the observational experiments were performed on former cropland, meaning carbon uptake would have likely occurred under any type of grazing, regenerative or not, or via cattle exclusion.</p>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                 <h2 class="text-3xl font-bold text-custom-orange mb-4 text-center">The Hidden Costs of Shifting Production</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Shifting to "pasture-based" systems without reducing consumption creates significant environmental burdens due to lower efficiencies.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-custom-purple mb-4 text-center">Case Study: The True Cost of Grass-Fed Beef</h3>
+                        <p class="text-gray-600 mb-6 text-center">To produce the same amount of beef, a nationwide shift to grass-finishing would require:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">🐄</span>
+                                <p class="text-3xl font-bold text-custom-purple">+30%</p>
+                                <p class="font-semibold">More Cattle</p>
+                            </div>
+                             <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">🌎</span>
+                                <p class="text-3xl font-bold text-custom-purple">+40-370%</p>
+                                <p class="font-semibold">More Land Use</p> <!-- Corrected Text -->
+                            </div>
+                             <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">💨</span>
+                                <p class="text-3xl font-bold text-custom-purple">+43%</p>
+                                <p class="font-semibold">More Methane</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-custom-purple mb-4 text-center">Case Study: The "Welfare" Chicken Trade-off</h3>
+                        <p class="text-gray-600 mb-6 text-center">Shifting to slower-growing, pasture-raised chicken breeds would lead to:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                             <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">🐔</span>
+                                <p class="text-3xl font-bold text-custom-purple">+45-87%</p>
+                                <p class="font-semibold">Larger Population</p>
+                            </div>
+                             <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">🌳</span>
+                                <p class="text-3xl font-bold text-custom-purple">+44-60%</p>
+                                <p class="font-semibold">More Land Use</p>
+                            </div>
+                             <div class="icon-stat-card">
+                                <span class="text-5xl mb-2">💔</span>
+                                <p class="text-xl font-bold text-custom-purple">Potentially Lower</p>
+                                <p class="font-semibold">Aggregate Welfare</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-custom-dark-blue mb-4 text-center">Cropland Solutions: No Silver Bullet</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Even on croplands, natural climate solutions like cover crops present major trade-offs. Maximizing GHG mitigation often comes at the cost of crop yields, and "win-win" outcomes are the exception, not the rule.</p>
+                <div class="chart-container mx-auto h-80 sm:h-96">
+                    <canvas id="croplandTradeoffsChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4">The scenario that balances both goals offers only modest climate benefits, highlighting that soil management alone is only a fraction of the solution.</p> <!-- Corrected Text -->
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                 <h2 class="text-3xl font-bold text-custom-dark-blue mb-4 text-center">A More Powerful Path: A Portfolio of Solutions</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Achieving deep decarbonization in the food system requires looking beyond the farm. Demand-side solutions offer direct, scalable, and immediate climate benefits, creating the space for land sparing and ecosystem restoration.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container mx-auto h-80 sm:h-96">
+                        <canvas id="proteinFootprintChart"></canvas>
+                    </div>
+                    <div class="chart-container mx-auto h-64 sm:h-80">
+                         <canvas id="foodWasteChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                     <h3 class="text-2xl font-bold text-custom-purple mb-6 text-center">The Synergy of Systemic Change</h3>
+                     <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-5 items-center gap-4">
+                        <div class="flowchart-node border-custom-pink text-custom-pink">Demand-Side Solutions<br><span class="text-sm font-normal text-gray-600">(Reduce Meat, Cut Waste)</span></div>
+                        <div class="flowchart-arrow">→</div>
+                        <div class="flowchart-node border-custom-purple text-custom-purple">Land Sparing<br><span class="text-sm font-normal text-gray-600">(Less pressure on land)</span></div>
+                        <div class="flowchart-arrow">→</div>
+                        <div class="flowchart-node border-custom-dark-blue text-custom-dark-blue">Ecosystem Restoration<br><span class="text-sm font-normal text-gray-600">(Maximizes C storage)</span></div>
+                     </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-12 pt-8 border-t border-gray-300">
+            <p class="text-gray-600">A portfolio approach, combining demand-side changes with evidence-based supply-side improvements, is essential for a sustainable food future.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Custom plugin to draw error bars directly on the chart and the vertical zero line
+        const customDrawingPlugin = {
+            id: 'customDrawingPlugin',
+            afterDatasetsDraw(chart, args, options) {
+                const { ctx, scales: { x, y } } = chart;
+
+                // Loop through datasets to draw error bars (only for grazingSOCChart)
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const meta = chart.getDatasetMeta(datasetIndex);
+
+                    if (chart.canvas.id === 'grazingSOCChart' && !meta.hidden && dataset.errorBars && Object.keys(dataset.errorBars).length > 0) {
+                        const errorBarColor = dataset.errorBars.borderColor || '#666666'; // Darker gray color
+                        const errorBarWidth = dataset.errorBars.borderWidth || 1.5;       // 3x fatter
+                        const whiskerRatio = dataset.errorBars.errorBarWhiskerRatio || 0.4;
+
+                        ctx.strokeStyle = errorBarColor;
+                        ctx.lineWidth = errorBarWidth;
+
+                        dataset.data.forEach((dataPoint, index) => {
+                            const barElement = meta.data[index];
+                            if (!barElement) {
+                                return;
+                            }
+
+                            const xCenter = barElement.x;
+                            const yCenter = barElement.y;
+                            const errorPlus = dataset.errorBars[index].plus;
+                            const errorMinus = dataset.errorBars[index].minus;
+
+                            const dataValue = dataset.data[index];
+                            const errorLeftPx = x.getPixelForValue(dataValue - errorMinus);
+                            const errorRightPx = x.getPixelForValue(dataValue + errorPlus);
+
+                            // Draw horizontal error line
+                            ctx.beginPath();
+                            ctx.moveTo(errorLeftPx, yCenter);
+                            ctx.lineTo(errorRightPx, yCenter);
+                            ctx.stroke();
+
+                            // Draw whiskers (vertical lines at ends)
+                            const whiskerLength = barElement.height * whiskerRatio / 2;
+                            ctx.beginPath();
+                            ctx.moveTo(errorLeftPx, yCenter - whiskerLength);
+                            ctx.lineTo(errorLeftPx, yCenter + whiskerLength);
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.moveTo(errorRightPx, yCenter - whiskerLength);
+                            ctx.lineTo(errorRightPx, yCenter + whiskerLength);
+                            ctx.stroke();
+                        });
+                    }
+                });
+
+                // Draw specific vertical grid lines for grazingSOCChart
+                if (chart.canvas.id === 'grazingSOCChart') {
+                    // Only draw lines at these specific values, which are now just 0 and integers
+                    const gridLineValues = [0, 1, 2, 3, 4, 5]; 
+                    
+                    ctx.save();
+                    gridLineValues.forEach(value => {
+                        const xPixel = x.getPixelForValue(value);
+                        if (xPixel >= chart.chartArea.left && xPixel <= chart.chartArea.right) {
+                            ctx.beginPath();
+                            if (value === 0) {
+                                ctx.strokeStyle = 'rgba(0, 63, 92, 0.25)'; // Darker gray for zero line
+                                ctx.lineWidth = 2.5; // Thicker for zero line
+                            } else {
+                                ctx.strokeStyle = 'rgba(0, 63, 92, 0.1)'; // Standard gridline color
+                                ctx.lineWidth = 1; // Standard thickness
+                            }
+                            ctx.moveTo(xPixel, chart.chartArea.top);
+                            ctx.lineTo(xPixel, chart.chartArea.bottom);
+                            ctx.stroke();
+                        }
+                    });
+                    ctx.restore();
+                }
+            }
+        };
+
+        // Register the custom drawing plugin
+        Chart.register(customDrawingPlugin);
+
+        function initializeCharts() {
+            if (typeof Chart === 'undefined') {
+                return;
+            }
+
+            const brilliantBluesPalette = {
+                darkBlue: '#003f5c', midBlue: '#2f4b7c', purple: '#665191',
+                magenta: '#a05195', pink: '#d45087', redPink: '#f95d6a',
+                orange: '#ff7c43', yellow: '#ffa600', background: 'rgba(240, 242, 245, 0.8)',
+                grid: 'rgba(0, 63, 92, 0.1)' // Standard gridline color
+            };
+
+            const chartTooltipConfig = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) { return label.join(' '); }
+                                return label;
+                            },
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                // Use context.raw for the most accurate data point value
+                                const rawDataValue = context.raw;
+
+                                // Custom logic for specific charts
+                                if (context.chart.canvas.id === 'grazingSOCChart') {
+                                    const datasetErrorBars = context.dataset.errorBars;
+                                    if (datasetErrorBars && datasetErrorBars[context.dataIndex]) {
+                                        const errorBarConfig = datasetErrorBars[context.dataIndex];
+                                        const errorPlus = errorBarConfig.plus;
+                                        const errorMinus = errorBarConfig.minus;
+                                        let unit = ' MgC/ha/y';
+                                        return `${label} ${rawDataValue.toFixed(2)} (CI: ${(rawDataValue - errorMinus).toFixed(2)} to ${(rawDataValue + errorPlus).toFixed(2)})${unit}`;
+                                    }
+                                } else if (context.chart.canvas.id === 'carbonStocksChart') {
+                                    let unit = ' tons C/ha';
+                                    return `${label} ${rawDataValue}${unit}`;
+                                } else if (context.chart.canvas.id === 'foodSystemEmissionsChart' || context.chart.canvas.id === 'foodWasteChart') {
+                                    // Doughnut chart: return the percentage directly from data
+                                    return `${context.label}: ${rawDataValue.toFixed(1)}%`;
+                                } else if (context.chart.canvas.id === 'croplandTradeoffsChart') {
+                                    // Scatter plot: show both X and Y values from raw data
+                                    return `Mitigation: ${rawDataValue.x.toFixed(1)} Pg CO2-eq, Yield Change: ${rawDataValue.y.toFixed(1)} Pg dry mass`;
+                                } else if (context.chart.canvas.id === 'proteinFootprintChart') {
+                                    // Horizontal bar chart: show the x-value (GHG footprint) from raw data
+                                    return `${context.dataset.label}: ${rawDataValue.toFixed(1)} kg CO2-eq`;
+                                }
+                                return `${label} ${rawDataValue}`;
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Food System Emissions Chart
+            const foodSystemEmissionsCtx = document.getElementById('foodSystemEmissionsChart');
+            if (foodSystemEmissionsCtx) {
+                const ctx = foodSystemEmissionsCtx.getContext('2d');
+                if (ctx) {
+                    try {
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Global Food System', 'Other Global Emissions'],
+                                datasets: [{
+                                    label: 'GHG Emissions Share',
+                                    data: [29.7, 70.3],
+                                    backgroundColor: [brilliantBluesPalette.redPink, brilliantBluesPalette.background],
+                                    borderColor: ['#ffffff'],
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    title: { display: true, text: 'Food System Share of Global GHG Emissions (%)', font: { size: 16 } },
+                                    ...chartTooltipConfig.plugins
+                                },
+                                cutout: '50%'
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create foodSystemEmissionsChart:", e); // Removed for brevity
+                    }
+                }
+            }
+
+
+            // Carbon Stocks Chart
+            const carbonStocksCtx = document.getElementById('carbonStocksChart');
+            if (carbonStocksCtx) {
+                const ctx = carbonStocksCtx.getContext('2d');
+                if (ctx) {
+                    try {
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Cropland', 'Grassland (Pasture)', 'Forest'],
+                                datasets: [
+                                    {
+                                        label: 'Soil Carbon (tons C/ha)',
+                                        data: [56, 102, 116], // Midpoints
+                                        // Error bars removed as requested
+                                        backgroundColor: brilliantBluesPalette.midBlue,
+                                    },
+                                    {
+                                        label: 'Vegetation Carbon (tons C/ha)',
+                                        data: [3, 5.5, 175], // Midpoints
+                                        // Error bars removed as requested
+                                        backgroundColor: brilliantBluesPalette.orange,
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: { display: true, text: 'Carbon Stocks (tons C/hectare)' },
+                                        // Adjust suggestedMax to fit mean bars more closely (max value 175)
+                                        suggestedMax: 180
+                                    }
+                                },
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    title: { display: true, text: 'Ecosystem Carbon Storage Capacity (with ranges)', font: { size: 16 } },
+                                    ...chartTooltipConfig.plugins
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create carbonStocksChart:", e); // Removed for brevity
+                    }
+                }
+            }
+
+
+            // Regenerative Grazing Chart with Custom Error Bars and Corrected Zero Line
+            const grazingSOCCtx = document.getElementById('grazingSOCChart');
+            if (grazingSOCCtx) {
+                const ctx = grazingSOCCtx.getContext('2d');
+                if (ctx) {
+                    const grazingChartData = {
+                        // Updated labels with lowercase for quality categories
+                        labels: ['Longitudinal (high quality)', 'Cross-Sectional (lower quality)', 'Observational (lowest quality)'],
+                        datasets: [{
+                            label: 'Mean Soil Carbon Sequestration', // Label updated to Mean
+                            // Data based on the user's latest provided values (Means)
+                            data: [0.28, 0.79, 2.95],
+                            errorBars: {
+                                // Error bar values based on the user's latest provided values (CIs)
+                                0: { plus: 0.41, minus: 0.41 }, // For Longitudinal (Mean: 0.28, CI: -0.13 to 0.69)
+                                1: { plus: 0.75, minus: 0.63 }, // For Cross-Sectional (Mean: 0.79, CI: 0.16 to 1.54)
+                                2: { plus: 2.16, minus: 1.70 }, // For Observational (Mean: 2.95, CI: 1.25 to 5.11)
+                                borderColor: '#666666', // Darker gray color
+                                borderWidth: 1.5,        // 3x fatter
+                                errorBarWhiskerRatio: 0.4
+                            },
+                            backgroundColor: [brilliantBluesPalette.purple, brilliantBluesPalette.magenta, brilliantBluesPalette.pink],
+                        }]
+                    };
+
+                    try {
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: grazingChartData,
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                indexAxis: 'y', // Horizontal bars
+                                scales: {
+                                    x: {
+                                        beginAtZero: false, // Allow negative values for x-axis
+                                        title: { display: true, text: 'Mean SOC Flux (tons C/hectare/year)' }, // Updated title label to remove "Median"
+                                        min: -0.2, // Ensures the negative part of Longitudinal CI is visible
+                                        max: 5.5, // Explicitly set X-axis max to 5.5
+                                        grid: {
+                                            drawOnChartArea: false, // Explicitly disable Chart.js drawing vertical grid lines within the chart area
+                                            drawBorder: false, // Remove default axis borders (the line above the numbers)
+                                            drawTicks: false // Explicitly remove grid line ticks
+                                        },
+                                        ticks: {
+                                            autoSkip: false, // Ensure all values are checked by the callback
+                                            callback: function(value, index, ticksArray) {
+                                                // Always return '0' for the value 0
+                                                if (value === 0) {
+                                                    return '0';
+                                                }
+                                                // Only display integers from 1 to 5. Hide all others.
+                                                const numValue = Number(value);
+                                                if (Number.isInteger(numValue) && numValue >= 1 && numValue <= 5) {
+                                                    return numValue.toString();
+                                                }
+                                                return ''; // Hide all other tick labels
+                                            },
+                                            // Explicitly provide values to ensure 0 is a candidate.
+                                            values: [0, 1, 2, 3, 4, 5], 
+                                            drawTicks: false // Explicitly remove ticks at all numbers
+                                        }
+                                    },
+                                    y: {
+                                        grid: {
+                                            drawOnChartArea: false, // Remove horizontal gridlines
+                                            drawTicks: false,       // Remove notches (tick marks)
+                                            drawBorder: false,      // Remove the border line along the y-axis itself
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: { display: false },
+                                    title: { display: true, text: 'Soil carbon cequestration in all published regenerative grazing studies', font: { size: 16 } }, // Updated chart title
+                                    ...chartTooltipConfig.plugins,
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create grazingSOCChart:", e); // Removed for brevity
+                    }
+                }
+            }
+
+
+            // Cropland Trade-offs Chart
+            const croplandTradeoffsCtx = document.getElementById('croplandTradeoffsChart');
+            if (croplandTradeoffsCtx) {
+                const ctx = croplandTradeoffsCtx.getContext('2d');
+                if (ctx) {
+                    try {
+                        new Chart(ctx, {
+                            type: 'scatter',
+                            data: {
+                                datasets: [{
+                                    label: 'Grass CC + No Tillage',
+                                    data: [{x: 32.6, y: -4.8}],
+                                    backgroundColor: brilliantBluesPalette.redPink,
+                                    pointRadius: 10, pointHoverRadius: 12
+                                }, {
+                                    label: 'Legume CC + No Tillage',
+                                    data: [{x: 30.3, y: 6.2}],
+                                    backgroundColor: brilliantBluesPalette.orange,
+                                    pointRadius: 10, pointHoverRadius: 12
+                                },{
+                                    label: 'Balanced Goals',
+                                    data: [{x: 4.4, y: 3.8}],
+                                    backgroundColor: brilliantBluesPalette.purple,
+                                    pointRadius: 10, pointHoverRadius: 12
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                scales: {
+                                    x: { title: { display: true, text: 'Cumulative GHG Mitigation by 2050 (Pg CO2-eq)' }, type: 'linear', position: 'bottom' },
+                                    y: { title: { display: true, text: 'Cumulative Crop Yield Change by 2050 (Pg dry mass)' } }
+                                },
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    title: { display: true, text: 'Trade-offs in Cropland Climate Solutions', font: { size: 16 } },
+                                    ...chartTooltipConfig.plugins,
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create croplandTradeoffsChart:", e); // Removed for brevity
+                    }
+                }
+            }
+
+            // Protein Footprint Chart
+            const proteinFootprintCtx = document.getElementById('proteinFootprintChart');
+            if (proteinFootprintCtx) {
+                const ctx = proteinFootprintCtx.getContext('2d');
+                if (ctx) {
+                    try {
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Beef', 'Cheese','Pork', 'Chicken',  'Tofu', 'Beans and Peas'],
+                                datasets: [{
+                                    label: 'kg CO2-eq per 100g protein',
+                                    data: [50.0, 10.8, 7.6, 5.7, 1.6, 0.5],
+                                    backgroundColor: [
+                                        brilliantBluesPalette.redPink, brilliantBluesPalette.pink,
+                                        brilliantBluesPalette.orange, brilliantBluesPalette.yellow,
+                                        brilliantBluesPalette.midBlue, brilliantBluesPalette.darkBlue
+                                    ],
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                indexAxis: 'y',
+                                scales: { x: { beginAtZero: true, title: { display: true, text: 'kg CO2-eq per 100g protein' } } },
+                                plugins: {
+                                    legend: { display: false },
+                                    title: { display: true, text: 'GHG Footprint of Protein Sources', font: { size: 16 } },
+                                    subtitle: { // Subtitle added here
+                                        display: true,
+                                        text: 'data from Poore and Nemecek, 2018 <i>Science</i>', // Added subtitle text with italicized Science
+                                    },
+                                    ...chartTooltipConfig.plugins
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create proteinFootprintChart:", e); // Removed for brevity
+                    }
+                }
+            }
+
+
+            // Food Waste Chart
+            const foodWasteCtx = document.getElementById('foodWasteChart');
+            if (foodWasteCtx) {
+                const ctx = foodWasteCtx.getContext('2d');
+                if (ctx) {
+                    try {
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Food Loss & Waste', 'Other Emissions'],
+                                datasets: [{
+                                    label: 'Share of Global GHG Emissions',
+                                    data: [9, 91],
+                                    backgroundColor: [brilliantBluesPalette.magenta, brilliantBluesPalette.background],
+                                    borderColor: ['#ffffff'],
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    title: { display: true, text: 'Food Waste\'s Share of Global GHG Emissions (%)', font: { size: 16 } },
+                                    ...chartTooltipConfig.plugins
+                                },
+                                cutout: '50%'
+                            }
+                        });
+                    } catch (e) {
+                        // console.error("ERROR: Failed to create foodWasteChart:", e); // Removed for brevity
+                    }
+                }
+            }
+        }
+
+        // Use DOMContentLoaded to ensure HTML is parsed before attempting to find canvas elements.
+        document.addEventListener('DOMContentLoaded', initializeCharts);
+    </script>
+</body>
+</html>
